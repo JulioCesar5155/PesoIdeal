@@ -7,15 +7,19 @@ export default function App() {
   const [idade, setIdade] = useState('25');
   const [kmRodados, setValorKm] = useState('100');
   const [resultadoH, setResultadoH] = useState('');
+  const [fundoMasculino, setFundoMasculino] = useState(false);
+  const [fundoFeminino, setFundoFeminino] = useState(false);
 
   const calcularPesoH = () => {
     const intAltura = parseFloat(altura);
     const intIdade = parseFloat(idade);
     const intKms = parseFloat(kmRodados);
 
-    const intPesoH = intAltura - 100 - [(intAltura - 150) / 4] + (intIdade / 10)
+    const intPesoH = intAltura - 100 - [(intAltura - 150) / 4] + (intIdade / 10);
     const consumo = intPesoH;
     setResultadoH(consumo.toFixed(2));
+    setFundoMasculino(true);
+    setFundoFeminino(false);
     Keyboard.dismiss();
   };
 
@@ -24,9 +28,11 @@ export default function App() {
     const intIdade = parseFloat(idade);
     const intKms = parseFloat(kmRodados);
 
-    const intPesoM = intAltura - 100 - [(intAltura - 150) / 2.5] + (intIdade / 10)
+    const intPesoM = intAltura - 100 - [(intAltura - 150) / 2.5] + (intIdade / 10);
     const consumo = intPesoM;
     setResultadoH(consumo.toFixed(2));
+    setFundoMasculino(false);
+    setFundoFeminino(true);
     Keyboard.dismiss();
   };
 
@@ -57,13 +63,25 @@ export default function App() {
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Sexo</Text>
 
-        <Pressable style={styles.button} onPress={calcularPesoH}>
-        <Text style={styles.buttonText}>Masculino</Text>
-      </Pressable>
+        <Pressable
+          style={[
+            styles.button,
+            fundoMasculino && { backgroundColor: '#007AFF' },
+          ]}
+          onPress={calcularPesoH}
+        >
+          <Text style={styles.buttonText}>Masculino</Text>
+        </Pressable>
 
-      <Pressable style={styles.button} onPress={calcularPesoM}>
-        <Text style={styles.buttonText}>Feminino</Text>
-      </Pressable>
+        <Pressable
+          style={[
+            styles.button,
+            fundoFeminino && { backgroundColor: 'pink' },
+          ]}
+          onPress={calcularPesoM}
+        >
+          <Text style={styles.buttonText}>Feminino</Text>
+        </Pressable>
       </View>
 
       {resultadoH !== '' && (
