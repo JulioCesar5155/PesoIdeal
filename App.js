@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Pressable, Keyboard } from 'react-native';
+import { StyleSheet, View, TextInput, Pressable, Keyboard } from 'react-native';
+import { GluestackUIProvider, Text } from '@gluestack-ui/themed';
+import { config } from "@gluestack-ui/config";
 
 export default function App() {
   const [altura, setAltura] = useState('170');
   const [idade, setIdade] = useState('25');
-  const [kmRodados, setValorKm] = useState('100');
   const [resultadoH, setResultadoH] = useState('');
   const [fundoMasculino, setFundoMasculino] = useState(false);
   const [fundoFeminino, setFundoFeminino] = useState(false);
@@ -13,7 +14,6 @@ export default function App() {
   const calcularPesoH = () => {
     const intAltura = parseFloat(altura);
     const intIdade = parseFloat(idade);
-    const intKms = parseFloat(kmRodados);
 
     const intPesoH = intAltura - 100 - [(intAltura - 150) / 4] + (intIdade / 10);
     const consumo = intPesoH;
@@ -26,7 +26,6 @@ export default function App() {
   const calcularPesoM = () => {
     const intAltura = parseFloat(altura);
     const intIdade = parseFloat(idade);
-    const intKms = parseFloat(kmRodados);
 
     const intPesoM = intAltura - 100 - [(intAltura - 150) / 2.5] + (intIdade / 10);
     const consumo = intPesoM;
@@ -37,6 +36,7 @@ export default function App() {
   };
 
   return (
+    <GluestackUIProvider config={config}>
     <View style={styles.container}>
       <Text style={styles.title}>Peso Ideal</Text>
 
@@ -93,6 +93,7 @@ export default function App() {
 
       <StatusBar style="auto" />
     </View>
+    </GluestackUIProvider>
   );
 }
 
