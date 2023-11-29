@@ -1,6 +1,10 @@
 import { Box, Text, Center, FormControl, FormControlLabel, FormControlLabelText, Heading, Input, InputField, HStack, Switch, Button, ButtonText } from "@gluestack-ui/themed";
 import { useState } from "react";
 
+import homem from "../../../assets/homem.png"
+import homem from "../../../assets/mulher.png"
+
+
 
 export default function Main() {
     const [peso, setPeso] = useState("72")
@@ -24,9 +28,15 @@ export default function Main() {
             //homem
             result = (72.7*alturaConvertida)-58
         }
-        setResultado(result) 
+        setResultado(Math.round(result))
     }
 
+    const limparHandle = () => {
+        setPeso("72")
+        setAltura("1.70")
+        setSexo(false)
+        setResultado("")
+    }
     return <Box bg="$amber600" p="$2" h={"$1/2"} w={300} borderRadius={"$md"}>
         <Center height={"$full"}>
             <Heading>Peso Ideal</Heading>
@@ -35,13 +45,13 @@ export default function Main() {
                     <FormControlLabelText>Peso</FormControlLabelText>
                 </FormControlLabel>
                 <Input w={"$full"}>
-                    <InputField value={peso} onChangeText={setPeso} />
+                    <InputField value={peso} onChangeText={setPeso} keyboardType="numeric" />
                 </Input>
                 <FormControlLabel>
                     <FormControlLabelText>Altura</FormControlLabelText>
                 </FormControlLabel>
                 <Input w={"$full"}>
-                    <InputField value={altura} onChangeText={setAltura} />
+                    <InputField value={altura} onChangeText={setAltura} keyboardType="number-pad"/>
                 </Input>
                 <FormControlLabel>
                     <FormControlLabelText>Sexo</FormControlLabelText>
@@ -57,10 +67,16 @@ export default function Main() {
                 <Button onPress={CalcularHandle}>
                     <ButtonText>Calcular</ButtonText>
                 </Button>
-                <Box justifyContent="center" alignItems="center" height={100}>
-                    <Text>Resultado: {resultado}</Text>
+                <Button onPress={limparHandle}>
+                    <ButtonText>Limpar</ButtonText>
+                </Button>
+                <Box justifyContent="space-around" alignItems="center" height={100} flexDirection="row">
+                    <Text>Resultado</Text>
+                    <Text fontWeight="$bold">{resultado}</Text>
+
                 </Box>
             </FormControl>
+            <Image source={sexo ? mulher : homem} alt="tipo do sexo"/>
         </Center>
         </Box>
 }
